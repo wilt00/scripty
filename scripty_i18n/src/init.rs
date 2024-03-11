@@ -46,6 +46,10 @@ pub fn init_i18n() {
 			}
 		};
 		info!("found language {}", lang_id);
+		if !&cfg.languages.contains(&lang_id.to_string()) {
+			info!("language {} was not enabled in configuration, ignoring", lang_id);
+			continue;
+		}
 		let resource = match std::fs::read_to_string(&path).map(FluentResource::try_new) {
 			Ok(Ok(r)) => r,
 			Err(e) => {
